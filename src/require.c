@@ -1,4 +1,6 @@
+#ifndef _WIN32
 #include <err.h>
+#endif
 #include <fcntl.h>
 #include <unistd.h>
 #include "mruby.h"
@@ -94,7 +96,11 @@ mrb_require_load_rb_str(mrb_state *mrb, mrb_value self)
   path_ptr = mrb_str_to_cstr(mrb, path);
 
   mask = umask(077);
+#ifdef _WIN32
+  fd = (int)_mktemp(tmpname);
+#else
   fd = mkstemp(tmpname);
+#endif
   if (fd == -1) {
     mrb_sys_fail(mrb, "can't create mkstemp() at mrb_require_load_rb_str");
   }
