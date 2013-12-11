@@ -1,8 +1,12 @@
-#ifndef _WIN32
-#include <err.h>
+#if defined(_WIN32) || defined(_win64)
+  #include <io.h>
+  typedef int mode_t;
+  #define umask _umask
+#else
+  #include <err.h>
+  #include <sunistd.h>
 #endif
 #include <fcntl.h>
-#include <unistd.h>
 #include "mruby.h"
 #include "mruby/compile.h"
 #include "mruby/dump.h"
