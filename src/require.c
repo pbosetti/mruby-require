@@ -4,7 +4,7 @@
   #define umask _umask
 #else
   #include <err.h>
-  #include <sunistd.h>
+  #include <unistd.h>
 #endif
 #include <fcntl.h>
 #include "mruby.h"
